@@ -3,7 +3,7 @@ Square
 
 Single Page Application Framework based in Angular.js and Twitter Bootstrap built with LESS.
 
-SQUARE is under development and will be released soon!
+SQUARE Documentation is under writing and will be released soon!
 
 License
 ======
