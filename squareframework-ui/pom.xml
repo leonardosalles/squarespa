@@ -1,0 +1,143 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<parent>
+		<groupId>com.squareframework</groupId>
+		<artifactId>squareframework</artifactId>
+		<version>1.0.0</version>
+	</parent>
+
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>squareframework-ui</artifactId>
+	<packaging>jar</packaging>
+	<name>SQUAREFramework UI</name>
+
+	<build>
+
+		<plugins>
+
+			<plugin>
+				<groupId>com.github.searls</groupId>
+				<artifactId>jasmine-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>test</goal>
+						</goals>
+					</execution>
+				</executions>
+
+				<configuration>
+					<keepServerAlive>true</keepServerAlive>
+					<webDriverClassName>org.openqa.selenium.phantomjs.PhantomJSDriver</webDriverClassName>
+
+					<jsSrcDir>src/main/resources</jsSrcDir>
+					<jsTestSrcDir>src/test/resources/unit</jsTestSrcDir>
+
+					<specRunnerTemplate>REQUIRE_JS</specRunnerTemplate>
+
+					<preloadSources>
+						<source>${project.basedir}/src/main/resources/vendor/requirejs/require.js</source>
+						<source>${project.basedir}/src/test/resources/main.js</source>
+					</preloadSources>
+				</configuration>
+
+			</plugin>
+
+			<plugin>
+				<groupId>com.github.timurstrekalov</groupId>
+				<artifactId>saga-maven-plugin</artifactId>
+
+				<executions>
+					<execution>
+						<goals>
+							<goal>coverage</goal>
+						</goals>
+					</execution>
+				</executions>
+
+				<configuration>
+					<baseDir>http://localhost:${jasmine.serverPort}</baseDir>
+					<outputDir>${project.build.directory}/coverage</outputDir>
+					<noInstrumentPatterns>
+						<pattern>.*/unit/.*</pattern>
+						<pattern>.*/vendor/.*</pattern>
+					</noInstrumentPatterns>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+
+				<executions>
+					<execution>
+						<id>jshint</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+
+						<configuration>
+							<target>
+								<taskdef name="jshint" classname="com.philmander.jshint.JsHintAntTask"
+									classpathref="maven.plugin.classpath" />
+
+								<jshint dir="${project.basedir}/src/main/resources/js"
+									fail="false"
+									optionsFile="${project.basedir}/src/main/resources/jshint/options.properties"
+									globalsFile="${project.basedir}/src/main/resources/jshint/globals.properties">
+									<include name="**/*.js" />
+									<report type="jslint-xml" destFile="${project.build.directory}/jslint.xml" />
+								</jshint>
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+
+				<dependencies>
+					<dependency>
+						<groupId>com.philmander.jshint</groupId>
+						<artifactId>ant-jshint</artifactId>
+						<version>0.3.4</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
+
+
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.apache.maven.plugins</groupId>
+										<artifactId>maven-antrun-plugin</artifactId>
+
+										<versionRange>[1.7,)</versionRange>
+										<goals>
+											<goal>run</goal>
+										</goals>
+									</pluginExecutionFilter>
+
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+
+	</build>
+
+</project>

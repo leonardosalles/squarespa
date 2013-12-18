@@ -1,0 +1,446 @@
+.input.inline {
+  	display: inline-block;
+  	margin: 0px;
+  	
+  	input[type="radio"], input[type="checkbox"] {
+  		margin: 0px;
+  	}  
+}
+
+.checkbox, .radio  {
+	line-height: 22px;
+}		
+
+input, textarea, select, .select2-container {
+	&.ng-dirty.ng-invalid {
+		background-color: #FFEEFF;  
+		border-color: #B94A48 !important;
+		box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+		color: #B94A48;
+	}
+	
+	&.ng-dirty.ng-invalid:focus {
+		border-color: #953B39 !important;
+		box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 6px #D59392 !important;
+	}
+		
+	&.ng-dirty.ng-invalid + .tooltip {
+		opacity: 1.0;
+	} 
+	
+	&.ng-dirty.ng-invalid + .tooltip .tooltip-inner {
+		background-color: #AD6262;
+	}
+	
+	&.ng-dirty.ng-invalid + .tooltip.top .tooltip-arrow {
+		border-top-color: #AD6262;
+	}
+	
+	&.ng-dirty.ng-invalid + .tooltip.bottom .tooltip-arrow {
+		border-bottom-color: #AD6262;
+	}	
+	
+	&.ng-pristine.ng-invalid {
+		background-color: #F4F0D0;  
+		border-color: #C09853 !important;
+		box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+		color: #A47E3C;
+	}
+	
+	&.ng-pristine.ng-invalid:focus {
+		border-color: #A47E3C !important;
+		box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 6px #DBC59E !important;
+	}
+		
+	&.ng-pristine.ng-invalid + .tooltip {
+		opacity: 1.0;
+	} 
+	
+	&.ng-pristine.ng-invalid + .tooltip .tooltip-inner {
+		background-color: #C09853;
+	}
+	
+	&.ng-pristine.ng-invalid + .tooltip.top .tooltip-arrow {
+		border-top-color: #C09853;
+	}
+	
+	&.ng-pristine.ng-invalid + .tooltip.bottom .tooltip-arrow {
+		border-bottom-color: #C09853;
+	}
+}
+
+.label-pristine, .badge-pristine {
+	color: @textColor;
+	background-color: #F4F0D0;
+}
+
+.label-dirty, .badge-dirty {
+	background-color: #FFEEFF;
+}
+
+.well-pristine {	
+	background-color: #F6EFDF;
+	border-color: #F4F0D0;
+}
+
+.well-dirty, .well-dirty {
+	background-color: #FFEEFF;
+	border-color: #D6C5C5;
+}
+
+
+
+/* Form Horizontal
+=================================================================== */
+.form-horizontal {
+	
+	.control-group {
+	  	margin-bottom: @baseLineHeight / 2;
+	}
+
+	.fieldset {
+		border-bottom: 1px solid #e5e5e5;
+		margin: 15px 0;
+	}
+	
+	.legend {
+		display: block;			
+		margin-bottom: @baseLineHeight;
+		font-size: 14px;
+		font-weight: bold;	
+		line-height: @baseLineHeight * 2;
+		color: @grayDark;				
+		
+		&.legend-large {
+			font-size: 18px;
+		}
+		
+		small {				
+			font-size: 11px;
+			font-weight: normal;
+			color: #999999;
+			margin-left: 10px;
+		}
+		
+		.well {
+			border: none;
+			font-weight: normal;
+			float: right;
+			margin-bottom: 0px;
+			padding: 1px 15px;
+		}
+	}
+	
+	.control-label-dados {
+	    float: left;
+	    width: @horizontalComponentOffsetDados - 10;
+	    padding-top: 5px;
+	    text-align: right;
+	  }
+	  
+	  .control-label-dados-depn {
+	    float: left;
+	    width: @horizontalComponentOffset - 10;
+	    padding-top: 5px;
+	    text-align: right;
+	  }
+	  
+	  .controlsDados {
+	    // Super jank IE7 fix to ensure the inputs in .input-append and input-prepend
+	    // don't inherit the margin of the parent, in this case .controls
+	    *display: inline-block;
+	    *padding-left: 20px;
+	    margin-left: @horizontalComponentOffsetDados;
+	    *margin-left: 0;
+	    &:first-child {
+	      *padding-left: @horizontalComponentOffsetDados;
+	    }
+	  }
+	  
+	  .controlsDadosDepn {
+	    // Super jank IE7 fix to ensure the inputs in .input-append and input-prepend
+	    // don't inherit the margin of the parent, in this case .controls
+	    *display: inline-block;
+	    *padding-left: 20px;
+	    margin-left: @horizontalComponentOffset;
+	    *margin-left: 0;
+	    &:first-child {
+	      *padding-left: @horizontalComponentOffset;
+	    }
+	  }
+	 
+	.help-block {
+    	margin-top: 5px !important;
+    	font-style: italic;
+  	}
+  	// Move over buttons in .form-actions to align with .controls
+	  .form-actions-dados {
+	    padding-left: @horizontalComponentOffsetDados;
+	  }
+	   
+}
+
+
+
+.control-group {
+	input[type='text'], input[type='password'], textarea, .uneditable-input {		
+		padding: 2px 5px;
+		.box-sizing(border-box);
+	}
+	
+	input[type='text'], input[type='password'], .uneditable-input {
+		min-height: @inputHeight;
+	}	
+
+	select {
+		outline: none;
+  		padding: 4px 4px 4px 2px;
+	}
+	
+	.checkbox, .radio  {
+		line-height: 16px;
+	}	
+		
+	.radio input[type="radio"], .checkbox input[type="checkbox"] {
+		margin-top: 2px;
+	}
+}
+
+
+/* input-append
+=================================================================== */
+.input-append {	
+	padding-right: 27px;
+	
+	.add-on {
+		position: absolute;
+	}
+	
+	.btn {
+		position: absolute;
+		padding: 4px 8px;
+	}
+}
+
+.input-prepend {
+	padding-left: 27px;
+	position: relative;
+	
+	.add-on {		
+    	position: absolute;
+		left: 0px;
+	}
+	
+	.btn {
+    	position: absolute;
+		left: 0px;
+		padding: 4px 8px;
+	}
+}
+
+
+
+
+
+/* input-icon
+=================================================================== */
+.input-icon {
+	position:relative;
+}
+
+span.input-icon {
+	display: inline-block;
+}
+.input-icon > input {
+	padding-left: 24px !important;
+	padding-right: 6px !important;
+}
+
+.input-icon.input-icon-right > input {
+	padding-left: 6px !important;
+	padding-right: 24px !important;
+}
+
+.input-icon>[class*="icon-"] {
+	padding: 0 3px;
+	z-index: 2;
+	position: absolute;	
+	bottom: 1px;
+	left: 3px;
+	top: 1px;	
+	line-height: @inputHeight;
+	height: @inputHeight;	
+	display: inline-block;
+	color: #909090;
+	font-size: 12px;
+}
+
+.input-icon > .flag {
+	z-index: 2;
+	position: absolute;
+	left: 5px;
+	top: ((@inputHeight - 11px) / 2) - 2px;
+}	
+
+
+.input-icon.input-icon-right > [class*="icon-"], .input-icon.input-icon-right > .flag {
+	left: auto;
+	right: 3px;
+}
+
+.input-icon > input:focus + [class*="icon-"], .input-icon > input:focus + .flag {
+	color: #579;
+}
+
+.input-icon + .help-inline {
+	padding-left: 8px;
+}
+
+
+
+/* FORM RESPONSIVE
+=================================================================== */
+.labelX (@index) when (@index > 0) {
+	.control-group.label@{index} {		
+		.control-label {			
+			width: @index * 10px;				
+		}
+			
+		.controls {
+			margin-left: (@index * 10px) + 20px;
+		}
+		
+		.control-label-dados {			
+			width: @index * 10px + 50;				
+		}
+		
+		.control-label-dados-depn {			
+			width: @index * 10px;				
+		}
+			
+		.controlsDados {
+			margin-left: (@index * 10px) + 70px;
+		}
+		
+		.controlsDadosDepn {
+			margin-left: (@index * 10px) + 20px;
+		}
+	}
+	
+	.labelX(@index - 1);
+}
+
+.control-group.label0 {		
+	.control-label {
+		display: none;			
+		width: 0px;				
+	}
+
+	.controls {
+		margin-left: 0px;
+	}
+	
+	.control-label-dados {
+		display: none;			
+		width: 0px;				
+	}
+	
+	.control-label-dados-depn {
+		display: none;			
+		width: 0px;				
+	}
+
+	.controlsDados {
+		margin-left: 0px;
+	}
+	
+	.controlsDadosDepn {
+		margin-left: 0px;
+	}
+}
+    
+    
+@media (min-width: 978px) {	    
+    .labelX(40);
+    
+    .controls-row {
+	
+		> .label, > span, > .btn:not([class*="span"]) {
+			margin-top: 5px;
+			margin-left: 2px;
+			margin-right: 2px;
+		}
+		
+		> span {
+			display: inline-block;
+		}
+		
+		& > :first-child  {
+			margin-left: 0px;
+			margin-right: 0px;
+		}
+	}
+	
+}
+
+@media (max-width: 977px) {
+
+    [class*="span"], .row-fluid [class*="span"] {
+        display: block;
+        float: none;
+        width: 100% !important;
+        margin-left: 0 !important;
+    }
+    .form-horizontal {
+		.control-label-dados-depn {			
+				width: 170px;				
+		}
+		.controlsDadosDepn {			
+				margin-left: 180px;				
+		}
+	}
+    .controls-row {
+
+    	> * {
+			margin-top: 5px;
+		}
+
+		> *:first-child  {
+			margin-top: 0px;
+		}
+	}
+}
+
+@media (max-width: 480px) {
+
+    [class*="span"], .row-fluid [class*="span"] {
+        display: block;
+        float: none;
+        width: 100% !important;
+        margin-left: 0 !important;
+    }
+
+    .form-horizontal {
+	    .control-label-dados {
+	      float: none;
+	      width: auto;
+	      padding-top: 0;
+	      text-align: left;
+    	}
+    	
+    	.control-label-dados-depn {
+	      float: none;
+	      width: auto;
+	      padding-top: 0;
+	      text-align: left;
+    	}
+	    // Move over all input controls and content
+	    .controlsDados {
+	    	  margin-left: 0;
+	    }
+	    // Move over all input controls and content
+	    .controlsDadosDepn {
+	    	  margin-left: 0;
+	    }
+	}
+}

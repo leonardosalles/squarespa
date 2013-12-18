@@ -1,0 +1,17 @@
+<div id="error-container">
+	<h3>{{'square.exception.page.header' | i18n}}</h3>	
+	
+	<p>{{error.message}}</p>
+	<ul>
+		<li ng-repeat="e in error.errors">{{e.message}}</li>
+	</ul>
+	
+	<br/>
+	
+	<div class="btn-toolbar">
+		<a class="btn btn-inverse" href="javascript:history.back();"><i class="icon-chevron-left"></i>&nbsp;{{'square.exception.page.back' | i18n}}</a>
+		<a class="btn btn-inverse" href="#/"><i class="icon-chevron-left"></i>&nbsp;{{'square.exception.page.backToHome' | i18n}}</a>
+		<button class="btn" ng-click="openStackTrace();"><i class="icon-list"></i>&nbsp; Detalhe do Erro</button>
+	</div>
+	
+</div>

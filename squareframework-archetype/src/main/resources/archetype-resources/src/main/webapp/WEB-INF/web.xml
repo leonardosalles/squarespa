@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	version="2.5">
+	
+	<display-name>${project.name} - v${project.version}-${timestamp}</display-name>
+	<description>${project.description}</description>
+	
+	<context-param>
+		<param-name>squareframework.mode</param-name>
+		<param-value>${squareframework.mode}</param-value>
+	</context-param>
+	
+	<context-param>
+		<param-name>squareframework.project_version</param-name>
+		<param-value>${project.version}-${timestamp}</param-value>
+	</context-param>
+	
+	<context-param>
+		<param-name>squareframework.restful_uri_prefix</param-name>
+		<param-value>rest</param-value>
+	</context-param>
+	
+	<context-param>
+		<param-name>squareframework.websocket_uri_prefix</param-name>
+		<param-value>websocket</param-value>
+	</context-param>	
+	
+	<context-param>
+		<param-name>squareframework.sso_mode</param-name>
+		<param-value>OPTIONAL</param-value>
+	</context-param>
+	
+	<context-param>
+		<param-name>squareframework.sso_header_param</param-name>
+		<param-value>oam_remote_user</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>squareframework.sso_logout_url</param-name>
+		<param-value>http://vcard04:14100/oam/server/logout?end_url={{end_url}}</param-value>
+	</context-param>
+
+
+	<listener>
+		<listener-class>com.squareframework.web.servlet.WebListener</listener-class>
+	</listener>
+	
+	<filter>
+		<filter-name>WebFilter</filter-name>
+		<filter-class>com.squareframework.web.servlet.WebFilter</filter-class>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>WebFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<mime-mapping>
+		<extension>js</extension>
+		<mime-type>application/javascript</mime-type>
+	</mime-mapping>
+	
+	<mime-mapping>
+		<extension>woff</extension>
+		<mime-type>application/font-woff</mime-type>
+	</mime-mapping>
+	
+	<mime-mapping>
+		<extension>less</extension>
+		<mime-type>text/css</mime-type>
+	</mime-mapping>	
+	
+	
+	
+	<!-- RESTEASY -->
+	<listener>
+		<listener-class>org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap</listener-class>
+	</listener>
+	
+	<context-param>
+		<param-name>resteasy.scan</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	
+	<context-param>
+		<param-name>resteasy.scan.resources</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	
+	<context-param>
+		<param-name>resteasy.servlet.mapping.prefix</param-name>
+		<param-value>/rest</param-value>
+	</context-param>	
+	
+	<servlet>
+		<servlet-name>Resteasy</servlet-name>
+		<servlet-class>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>Resteasy</servlet-name>
+		<url-pattern>/rest/*</url-pattern>
+	</servlet-mapping>
+	
+	
+	<!-- WEBSOCKET -->
+	<servlet>
+		<servlet-name>WebSocket</servlet-name>
+		<servlet-class>com.squareframework.web.websocket.WebSocketServlet</servlet-class>
+		<load-on-startup>0</load-on-startup>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>WebSocket</servlet-name>
+		<url-pattern>/websocket/*</url-pattern>
+	</servlet-mapping>
+	
+	
+	<!-- EHCACHE -->
+	<filter>
+		<filter-name>SimpleCachingHeadersPageCachingFilter</filter-name>
+		<filter-class>net.sf.ehcache.constructs.web.filter.SimpleCachingHeadersPageCachingFilter</filter-class>
+		<init-param>
+			<param-name>cacheName</param-name>
+			<param-value>SimpleCachingHeadersPageCachingFilter</param-value>
+		</init-param>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>SimpleCachingHeadersPageCachingFilter</filter-name>
+		<url-pattern>/static/${project.version}-${timestamp}/*</url-pattern>
+	</filter-mapping>
+	
+	<filter>
+		<filter-name>GzipFilter</filter-name>
+		<filter-class>net.sf.ehcache.constructs.web.filter.GzipFilter</filter-class>
+		<init-param>
+			<param-name>varyHeader</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>GzipFilter</filter-name>
+		<url-pattern>/static/*</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>GzipFilter</filter-name>
+		<url-pattern>/rest/*</url-pattern>
+	</filter-mapping>
+</web-app>

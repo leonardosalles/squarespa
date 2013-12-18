@@ -1,0 +1,13 @@
+com/squareframework/web/WebContext.class
+com/squareframework/web/GenericError$ObjectError.class
+com/squareframework/web/config/SSOConfig$Mode.class
+com/squareframework/web/servlet/WebFilter.class
+com/squareframework/web/config/WebConfig$Mode.class
+com/squareframework/web/config/SSOConfig.class
+com/squareframework/web/servlet/tags/OutputScriptTag.class
+com/squareframework/web/config/WebConfig.class
+com/squareframework/web/servlet/tags/OutputStylesheetTag.class
+com/squareframework/web/servlet/WebListener.class
+com/squareframework/web/servlet/tags/OutputFaviconTag.class
+com/squareframework/web/config/UserConfig.class
+com/squareframework/web/GenericError.class

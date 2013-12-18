@@ -1,0 +1,48 @@
+<ul class="breadcrumb">
+	<li class="active">{{'menu.todo' | i18n}}</li>	
+</ul>
+ 
+<button type="button" ng:click="openModalEditar()" class="btn">{{'todo.novo' | i18n}}</button>
+ 
+<br></br>
+	 
+<form name="form" class="form-horizontal" style="margin-bottom: 5px;" ng-submit="pesquisar()">	 			
+	<div class="row-fluid">
+		<div sqr-controls="true" class="label0 span6">
+		 	<span>{{'todo.cadastros' | i18n}}</<span>
+		</div>
+			
+		<div sqr-controls="true" class="label8 span6" label="{{'defaults.localizar' | i18n}}">
+			<input type="text" ng-model="filtro.titulo" placeholder="{{'todo.titulo' | i18n}}" class="span10">
+			<button type="submit" class="span2 btn"><i class="icon-search"></i></button>	
+		</div>
+	</div>
+</form>	
+  
+ 
+<table class="table table-bordered table-striped" sqr-tablesorter="{pager: pager}">
+	<thead>
+		<tr>			
+			<th style="width:80%" class="{id: 'titulo', sorter: 'metadata'}">{{'todo.titulo' | i18n}}</th>
+			<th style="width:10%" class="{id: 'concluido', sorter: 'metadata'}">{{'todo.concluido' | i18n}}</th>
+			<th style="width:10%" class="{sorter: false}"></th>
+		</tr>
+	</thead>
+	
+	<tbody>
+		<tr ng-repeat="todo in pager.results">
+			<td>{{todo.titulo}}</td>
+			<td style="text-align:center;">
+				<input type="checkbox" ng-model="todo.concluido" disabled="disabled">
+			</td>
+			
+			<td style="text-align:center;">
+				<button ng:click="openModalEditar(todo)" class="btn btn-small" title="{{'todo.editar' | i18n}}"><i class="icon-edit"></i></button>
+				<button ng:click="openModalDeletar(todo)" class="btn btn-small btn-danger" title="{{'todo.deletar' | i18n}}"><i class="icon-trash"></i></button>
+			</td>
+		</tr>
+	</tbody>	
+</table>
+ 
+<div sqr-datascroller="{pager: pager, placement: 'bottom'}">
+</div>

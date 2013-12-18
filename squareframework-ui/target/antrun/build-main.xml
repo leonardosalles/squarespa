@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="maven-antrun-" default="main"  >
+<target name="main">
+  <taskdef name="jshint" classname="com.philmander.jshint.JsHintAntTask" classpathref="maven.plugin.classpath"/>
+  <jshint optionsFile="/home/leonardoss/workspace_frontend_renner_cvs/squareframework/squareframework-ui/src/main/resources/jshint/options.properties" fail="false" globalsFile="/home/leonardoss/workspace_frontend_renner_cvs/squareframework/squareframework-ui/src/main/resources/jshint/globals.properties" dir="/home/leonardoss/workspace_frontend_renner_cvs/squareframework/squareframework-ui/src/main/resources/js">
+    <include name="**/*.js"/>
+    <report destFile="/home/leonardoss/workspace_frontend_renner_cvs/squareframework/squareframework-ui/target/jslint.xml" type="jslint-xml"/>
+  </jshint>
+</target>
+</project>

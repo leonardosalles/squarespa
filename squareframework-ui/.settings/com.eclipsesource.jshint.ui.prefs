@@ -1,0 +1,5 @@
+eclipse.preferences.version=1
+globals=angular\: false, define\: false, require\: false, I18n\: false, PhoneNumber\: false, SQUARE_CONFIG\: false, Select2\: false, moment\: false
+included=src/main/resources/js//*.js
+options=browser\: true, jquery\: true, esnext\: true,bitwise\: true,camelcase\: false,curly\: true,eqeqeq\: true,immed\: true,indent\: 2,latedef\: true,newcap\: true,noarg\: true,quotmark\: "single",regexp\: true,undef\: true,unused\: true,strict\: true,trailing\: true,smarttabs\: true,white\: true
+projectSpecificOptions=true

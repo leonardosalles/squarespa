@@ -1,0 +1,438 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<parent>
+		<groupId>com.squareframework</groupId>
+		<artifactId>squareframework</artifactId>
+		<version>1.0.0</version>
+	</parent>
+
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>squareframework-super-pom</artifactId>
+	<packaging>pom</packaging>
+	<name>SQUAREFramework Super POM</name>
+
+	<properties>
+		<squareframework.mode>PRODUCTION</squareframework.mode>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.google.javascript</groupId>
+			<artifactId>closure-compiler</artifactId>
+			<version>v20130411</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-war-plugin</artifactId>
+					<version>2.3</version>
+					<executions>
+						<execution>
+							<phase>validate</phase>
+							<goals>
+								<goal>exploded</goal>
+							</goals>
+
+							<configuration>
+								<useCache>false</useCache>
+							</configuration>
+						</execution>
+
+						<execution>
+							<id>default-war</id>
+							<phase>package</phase>
+							<goals>
+								<goal>war</goal>
+							</goals>
+
+							<configuration>
+								<warSourceDirectory>${project.build.directory}/${project.build.finalName}</warSourceDirectory>
+								<useCache>true</useCache>
+
+								<overlays>
+									<overlay>
+										<groupId>com.squareframework</groupId>
+										<artifactId>squareframework-ui</artifactId>
+										<type>jar</type>
+										<targetPath>/static/square</targetPath>
+										<excludes>
+											<exclude>**/*</exclude>
+										</excludes>
+									</overlay>
+								</overlays>
+
+								<webResources>
+									<resource>
+										<directory>src/main/webapp</directory>
+										<filtering>true</filtering>
+										<includes>
+											<include>WEB-INF/web.xml</include>
+										</includes>
+									</resource>
+								</webResources>
+							</configuration>
+						</execution>
+					</executions>
+
+					<configuration>
+						<overlays>
+							<overlay>
+								<groupId>com.squareframework</groupId>
+								<artifactId>squareframework-ui</artifactId>
+								<type>jar</type>
+								<targetPath>/static/square</targetPath>
+							</overlay>
+						</overlays>
+					</configuration>
+				</plugin>
+
+
+				<plugin>
+					<groupId>com.github.searls</groupId>
+					<artifactId>jasmine-maven-plugin</artifactId>
+					<version>1.3.1.2</version>
+					<executions>
+						<execution>
+							<phase>test</phase>
+							<goals>
+								<goal>test</goal>
+							</goals>
+						</execution>
+					</executions>
+
+					<configuration>
+						<keepServerAlive>true</keepServerAlive>
+						<webDriverClassName>org.openqa.selenium.phantomjs.PhantomJSDriver</webDriverClassName>
+
+						<jsSrcDir>${project.build.directory}/${project.build.finalName}/static</jsSrcDir>
+						<jsTestSrcDir>${basedir}/src/test/resources/unit</jsTestSrcDir>
+
+						<specRunnerTemplate>REQUIRE_JS</specRunnerTemplate>
+
+						<preloadSources>
+							<source>${project.build.directory}/${project.build.finalName}/static/square/vendor/requirejs/require.js</source>
+							<source>${project.build.directory}/${project.build.finalName}/static/square/test/main.js</source>
+						</preloadSources>
+					</configuration>
+
+				</plugin>
+
+				<plugin>
+					<groupId>com.github.timurstrekalov</groupId>
+					<artifactId>saga-maven-plugin</artifactId>
+					<version>1.4.2</version>
+					<executions>
+						<execution>
+							<phase>test</phase>
+							<goals>
+								<goal>coverage</goal>
+							</goals>
+						</execution>
+					</executions>
+
+					<configuration>
+						<baseDir>http://localhost:${jasmine.serverPort}</baseDir>
+						<outputDir>${project.build.directory}/coverage</outputDir>
+						<noInstrumentPatterns>
+							<pattern>.*/spec/.*</pattern>
+							<pattern>.*/test/.*</pattern>
+							<pattern>.*/spa/.*</pattern>
+						</noInstrumentPatterns>
+					</configuration>
+				</plugin>
+
+
+				<plugin>
+					<groupId>org.lesscss</groupId>
+					<artifactId>lesscss-maven-plugin</artifactId>
+					<version>1.3.3</version>
+					<executions>
+						<execution>
+							<id>default</id>
+							<phase>compile</phase>
+							<goals>
+								<goal>compile</goal>
+							</goals>
+						</execution>
+					</executions>
+
+					<configuration>
+						<sourceDirectory>${project.build.directory}/${project.build.finalName}/static/css/</sourceDirectory>
+						<outputDirectory>${project.build.directory}/${project.build.finalName}/static/css/</outputDirectory>
+						<compress>true</compress>
+						<includes>
+							<include>app.less</include>
+						</includes>
+					</configuration>
+				</plugin>
+
+
+				<plugin>
+					<groupId>com.github.mcheely</groupId>
+					<artifactId>requirejs-maven-plugin</artifactId>
+					<version>1.1.0</version>
+					<executions>
+						<execution>
+							<phase>compile</phase>
+							<goals>
+								<goal>optimize</goal>
+							</goals>
+						</execution>
+					</executions>
+
+					<configuration>
+						<configFile>${project.build.directory}/${project.build.finalName}/static/square/build/buildconfig.js</configFile>
+						<filterConfig>true</filterConfig>
+						<skip>false</skip>
+					</configuration>
+
+
+				</plugin>
+
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>exec-maven-plugin</artifactId>
+					<version>1.2.1</version>
+					<executions>
+						<execution>
+							<phase>compile</phase>
+							<goals>
+								<goal>exec</goal>
+							</goals>
+						</execution>
+					</executions>
+
+					<configuration>
+						<executable>java</executable>
+						<classpathScope>test</classpathScope>
+
+						<arguments>
+							<argument>-classpath</argument>
+							<classpath />
+
+							<argument>com.google.javascript.jscomp.CommandLineRunner</argument>
+
+							<argument>--compilation_level</argument>
+							<argument>WHITESPACE_ONLY</argument>
+
+							<argument>--language_in</argument>
+							<argument>ECMASCRIPT5</argument>
+
+							<arguments>--warning_level</arguments>
+							<arguments>QUIET</arguments>
+
+							<argument>--js</argument>
+							<argument>${project.build.directory}/${project.build.finalName}/static/js/out.js</argument>
+
+							<argument>--js_output_file</argument>
+							<argument>${project.build.directory}/${project.build.finalName}/static/js/all.js</argument>
+						</arguments>
+					</configuration>
+				</plugin>
+
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-antrun-plugin</artifactId>
+					<version>1.7</version>
+					<executions>
+						<execution>
+							<id>jshint</id>
+							<phase>validate</phase>
+							<goals>
+								<goal>run</goal>
+							</goals>
+
+							<configuration>
+								<target>
+									<taskdef name="jshint" classname="com.philmander.jshint.JsHintAntTask"
+										classpathref="maven.plugin.classpath" />
+
+									<jshint dir="${basedir}/src/main/webapp/static/js" fail="false"
+										optionsFile="${project.build.directory}/${project.build.finalName}/static/square/jshint/options.properties"
+										globalsFile="${project.build.directory}/${project.build.finalName}/static/square/jshint/globals.properties">
+										<include name="**/*.js" />
+										<report type="jslint-xml" destFile="${project.build.directory}/jslint.xml" />
+									</jshint>
+
+								</target>
+							</configuration>
+						</execution>
+
+						<execution>
+							<phase>prepare-package</phase>
+							<goals>
+								<goal>run</goal>
+							</goals>
+
+							<configuration>
+								<target>
+									<copy
+										todir="${project.build.directory}/${project.build.finalName}/static/${project.version}-${maven.build.timestamp}/square/font">
+										<fileset
+											dir="${project.build.directory}/${project.build.finalName}/static/square/font"
+											includes="**/*" />
+									</copy>
+
+									<copy
+										todir="${project.build.directory}/${project.build.finalName}/static/${project.version}-${maven.build.timestamp}/spa/img">
+										<fileset
+											dir="${project.build.directory}/${project.build.finalName}/static/square/img"
+											includes="**/*" />
+									</copy>
+									
+									<copy
+										todir="${project.build.directory}/${project.build.finalName}/static/${project.version}-${maven.build.timestamp}/img">
+										<fileset
+											dir="${project.build.directory}/${project.build.finalName}/static/img"
+											includes="**/*" />
+									</copy>
+
+									<copy
+										todir="${project.build.directory}/${project.build.finalName}/static/${project.version}-${maven.build.timestamp}/views">
+										<fileset
+											dir="${project.build.directory}/${project.build.finalName}/static/views"
+											includes="**/*" />
+									</copy>
+
+									<copy
+										file="${project.build.directory}/${project.build.finalName}/static/css/app.css"
+										tofile="${project.build.directory}/${project.build.finalName}/static/${project.version}-${maven.build.timestamp}/css/all.css">
+									</copy>
+
+									<copy
+										file="${project.build.directory}/${project.build.finalName}/static/js/all.js"
+										tofile="${project.build.directory}/${project.build.finalName}/static/${project.version}-${maven.build.timestamp}/all.js">
+									</copy>
+									
+									
+									<delete
+										file="${project.build.directory}/${project.build.finalName}/static/css/app.css" />
+										
+									<delete
+										dir="${project.build.directory}/${project.build.finalName}/static/square/build" />	
+										
+									<delete
+										dir="${project.build.directory}/${project.build.finalName}/static/square/jshint" />
+										
+									<delete
+										dir="${project.build.directory}/${project.build.finalName}/static/square/test" />									
+								</target>
+
+							</configuration>
+						</execution>
+					</executions>
+
+					<dependencies>
+						<dependency>
+							<groupId>com.philmander.jshint</groupId>
+							<artifactId>ant-jshint</artifactId>
+							<version>0.3.4</version>
+						</dependency>
+					</dependencies>
+				</plugin>
+
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.apache.maven.plugins</groupId>
+										<artifactId>maven-antrun-plugin</artifactId>
+										<versionRange>[1.3.Final,)</versionRange>
+										<goals>
+											<goal>run</goal>
+										</goals>
+									</pluginExecutionFilter>
+
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.lesscss</groupId>
+										<artifactId>lesscss-maven-plugin</artifactId>
+
+										<versionRange>[1.3.3,)</versionRange>
+										<goals>
+											<goal>compile</goal>
+										</goals>
+									</pluginExecutionFilter>
+
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.apache.maven.plugins</groupId>
+										<artifactId>maven-war-plugin</artifactId>
+
+										<versionRange>[2.3,)</versionRange>
+										<goals>
+											<goal>exploded</goal>
+										</goals>
+									</pluginExecutionFilter>
+
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+								
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.codehaus.mojo</groupId>
+										<artifactId>exec-maven-plugin</artifactId>
+
+										<versionRange>[1.2.1,)</versionRange>
+										<goals>
+											<goal>exec</goal>
+										</goals>
+									</pluginExecutionFilter>
+
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+					
+								
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>com.github.mcheely</groupId>
+										<artifactId>requirejs-maven-plugin</artifactId>
+
+										<versionRange>[1.1.0,)</versionRange>
+										<goals>
+											<goal>optimize</goal>
+										</goals>
+									</pluginExecutionFilter>
+
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+					
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+
+		</pluginManagement>
+
+	</build>
+</project>
